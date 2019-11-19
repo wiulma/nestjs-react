@@ -5,15 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to nestjs-api",
+            "type": "node",
+            "request": "attach",
+            "name": "Attach NestJS WS - local",
+            "port": 9229,
+            "restart": true,
+            "stopOnEntry": false,
+            "protocol": "inspector"
+        },
+        {
+            "name": "Docker: Attach to Node",
             "type": "node",
             "request": "attach",
             "port": 9229,
             "address": "localhost",
-            "localRoot": "${workspaceFolder}/ngtest-api",
-            "remoteRoot": "/usr/local/ngtest-api",
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/nest",
             "protocol": "inspector",
             "restart": true
         }
+        
     ]
 }
