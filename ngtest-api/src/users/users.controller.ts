@@ -1,4 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put , Delete} from '@nestjs/common';
+
+import { ApiResponse, ApiForbiddenResponse, ApiCreatedResponse } from '@nestjs/swagger';
+
 import { RequestUserDto } from './dto/Request.dto';
 import { ResponseUserDto } from './dto/Response.dto';
 import { UsersService } from './users.service';
@@ -13,11 +16,15 @@ export class UsersController {
      * find all users
      */
     @Get()
+    @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: ResponseUserDto, isArray: true})
+    @ApiForbiddenResponse({ description: 'Forbidden.'})
     async findAll(): Promise<ResponseUserDto[]> {
         return this.userService.findAll();
     }
 
     @Get(':id')
+    @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: ResponseUserDto})
+    @ApiForbiddenResponse({ description: 'Forbidden.'})
     async findById(@Param('id') id: string): Promise<ResponseUserDto> {
         console.log(`find user by id ${id}`);
         return {
@@ -32,6 +39,8 @@ export class UsersController {
      * save user
      */
     @Post()
+    @ApiCreatedResponse({ description: 'The record has been successfully created.', type: ResponseUserDto})
+    @ApiForbiddenResponse({ description: 'Forbidden.'})
     async createUser(@Body() user: RequestUserDto): Promise<ResponseUserDto | null> {
         console.log('create user', user);
         return {
@@ -43,6 +52,8 @@ export class UsersController {
     }
 
     @Put(':id')
+    @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: ResponseUserDto})
+    @ApiResponse({ status: 403, description: 'Forbidden.'})
     async updateUser(@Param('id') id: string, @Body() user: RequestUserDto): Promise<ResponseUserDto> {
         console.log('update user with id', id, user);
         return {
@@ -55,6 +66,7 @@ export class UsersController {
 
 
     @Delete(':id')
+    @ApiResponse({ status: 200, description: 'The record has been successfully deleted.'})
     async deleteUser(@Param('id') id: string): Promise<any> {
         console.log('delete user with id', id);
         return null;
