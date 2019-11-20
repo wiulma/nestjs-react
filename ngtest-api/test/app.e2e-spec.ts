@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from 'src/user/node_modules/@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 
