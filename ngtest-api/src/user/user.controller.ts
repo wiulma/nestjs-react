@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put ,Delete, UsePipes, ValidationPipe} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put ,Delete, UsePipes, ValidationPipe, UseInterceptors} from '@nestjs/common';
 import { ApiResponse, ApiForbiddenResponse, ApiCreatedResponse } from '@nestjs/swagger';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { ResponseUserDto } from './dto/response-user.dto';
+import { TransformInterceptor } from '../common/interceptors/transform.interceptor'
+import { CreateUserDto, DetailUserDto, ResponseUserListDto } from './user.dto';
 import { UserService } from './user.service';
+import { User } from './user.interface';
 
 @Controller('users')
 export class UserController {
@@ -13,41 +14,39 @@ export class UserController {
     /**
      * find all users
      */
-    /*
     @Get()
-    @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: ResponseUserDto, isArray: true})
-    @ApiForbiddenResponse({ description: 'Forbidden.'})
-    async findAll(): Promise<ResponseUserDto[]> {
+    @ApiResponse({ status: 200, description: 'Find all users', type: ResponseUserListDto, isArray: true})
+    @ApiForbiddenResponse({ description: 'FORBIDDEN'})
+    async findAll(): Promise<ResponseUserListDto[]> {
         return this.userService.findAll();
     }
-*/
-/*
+
     @Get(':id')
-    @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: ResponseUserDto})
+    @UseInterceptors(TransformInterceptor)
+    @ApiResponse({ status: 200, description: 'User details.', type: DetailUserDto})
     @ApiForbiddenResponse({ description: 'Forbidden.'})
-    async findById(@Param('id') id: number): Promise<ResponseUserDto> {
+    async findById(@Param('id') id: number): Promise<User> {
         console.log(`find user by id ${id}`);
         return this.userService.findById(id);
     }
-*/
 
     /**
      * save user
      */
     @Post()
-    @ApiCreatedResponse({ description: 'The record has been successfully created.', type: ResponseUserDto})
+    @ApiCreatedResponse({ description: 'The record has been successfully created.', type: DetailUserDto})
     @ApiForbiddenResponse({ description: 'Forbidden.'})
-    @UsePipes(new ValidationPipe({ transform: true }))
-    async createUser(@Body() user: CreateUserDto): Promise<ResponseUserDto | null> {
+    @UsePipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true }))
+    async createUser(@Body() user: CreateUserDto): Promise<User | null> {
         console.log('create user', user);
         return this.userService.create(user);
     }
 
-    /*
     @Put(':id')
-    @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: ResponseUserDto})
+    @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: DetailUserDto})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    async updateUser(@Param('id') id: number, @Body() user: RequestUserDto): Promise<ResponseUserDto> {
+    @UsePipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true, skipMissingProperties: true }))
+    async updateUser(@Param('id') id: number, @Body() user: DetailUserDto): Promise<User> {
         console.log('update user with id', id, user);
         return {
             id,
@@ -56,7 +55,6 @@ export class UserController {
             email: user.email
         };
     }
-*/
 
     @Delete(':id')
     @ApiResponse({ status: 200, description: 'The record has been successfully deleted.'})
