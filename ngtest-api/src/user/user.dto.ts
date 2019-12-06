@@ -1,4 +1,4 @@
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsInt, IsEmail } from 'class-validator';
 
 /**
@@ -7,35 +7,35 @@ import { IsString, IsInt, IsEmail } from 'class-validator';
  */
 export class CreateUserDto {
     
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString({message: 'INVALID.NAME'})
     readonly name: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString({message: 'INVALID.SURNAME'})
     readonly surname: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsEmail({}, { message: 'INVALID.EMAIL' })
     readonly email?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly bornDate?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly address?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly city?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly country?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly imageUrl?: string
 }
@@ -46,39 +46,39 @@ export class CreateUserDto {
  */
 export class DetailUserDto {
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsInt({message: 'INVALID.NAME'})
     readonly id: number;
     
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString({message: 'INVALID.NAME'})
     readonly name?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString({message: 'INVALID.SURNAME'})
     readonly surname?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsEmail({}, { message: 'INVALID.EMAIL' })
     readonly email?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly bornDate?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly address?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly city?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly country?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     @IsString()
     readonly imageUrl?: string
 }
@@ -88,15 +88,15 @@ export class DetailUserDto {
  * @class 
  */
 export class ResponseUserListDto {
-    @ApiModelProperty()
+    @ApiProperty()
     readonly id?: number;
 
-    @ApiModelProperty()
+    @ApiProperty()
     readonly name?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     readonly surname?: string;
 
-    @ApiModelProperty()
+    @ApiProperty()
     readonly email?: string;
 }

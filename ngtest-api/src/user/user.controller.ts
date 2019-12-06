@@ -1,11 +1,12 @@
 import { Body, Controller, Get, Param, Post, Put ,Delete, UsePipes, ValidationPipe, UseInterceptors} from '@nestjs/common';
-import { ApiResponse, ApiForbiddenResponse, ApiCreatedResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiForbiddenResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor'
 import { CreateUserDto, DetailUserDto, ResponseUserListDto } from './user.dto';
 import { UserService } from './user.service';
 import { User } from './user.interface';
 
+@ApiTags('users')
 @Controller('users')
 export class UserController {
 
