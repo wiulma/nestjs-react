@@ -11,8 +11,9 @@ services:
       - NODE_ENV=local-stage
     volumes:
       - ./ngtest-api:/usr/local/ngtest-api
-      - /usr/local/ngtest-api/node_modules/
     entrypoint: ./docker/dev/entrypoint.sh
+    env_file:
+      - ".env"    
     depends_on:
         - mysqldb
     ports:

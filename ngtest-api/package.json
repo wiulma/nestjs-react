@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
+    "generate-entities": "typeorm-model-generator -h mysqldb -d test -p 3306 -u dev -x dev -e mysql -o ./tmp/entities",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -25,12 +26,15 @@
     "@nestjs/core": "^6.10.7",
     "@nestjs/platform-express": "^6.10.7",
     "@nestjs/swagger": "^4.0.9",
+    "@nestjs/typeorm": "^6.2.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
+    "mysql": "^2.17.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
-    "swagger-ui-express": "^4.1.2"
+    "swagger-ui-express": "^4.1.2",
+    "typeorm": "^0.2.21"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.12.9",
@@ -50,6 +54,7 @@
     "ts-node": "^8.5.4",
     "tsconfig-paths": "^3.9.0",
     "tslint": "^5.20.1",
+    "typeorm-model-generator": "^0.3.5",
     "typescript": "^3.7.3"
   },
   "jest": {

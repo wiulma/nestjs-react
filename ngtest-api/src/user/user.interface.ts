@@ -1,9 +1,9 @@
-export interface User {
+export interface IUser {
     id?: number;
     name?: string;
     surname?: string;
     email?: string;
-    bornDate?: string;
+    dateBorn?: string;
     address?: string;
     city?: string;
     country?: string;

@@ -21,7 +21,7 @@ export class CreateUserDto {
 
     @ApiProperty()
     @IsString()
-    readonly bornDate?: string;
+    readonly dateBorn?: string;
 
     @ApiProperty()
     @IsString()
@@ -64,7 +64,7 @@ export class DetailUserDto {
 
     @ApiProperty()
     @IsString()
-    readonly bornDate?: string;
+    readonly dateBorn?: string;
 
     @ApiProperty()
     @IsString()

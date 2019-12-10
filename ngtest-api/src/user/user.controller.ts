@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put ,Delete, UsePipes, ValidationPipe, UseInterceptors} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put ,Delete, UsePipes, ValidationPipe, UseInterceptors, ClassSerializerInterceptor} from '@nestjs/common';
 import { ApiResponse, ApiForbiddenResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
-import { TransformInterceptor } from '../common/interceptors/transform.interceptor'
 import { CreateUserDto, DetailUserDto, ResponseUserListDto } from './user.dto';
 import { UserService } from './user.service';
-import { User } from './user.interface';
+import { User } from './user.entity';
+import {classToPlain} from "class-transformer";
 
 @ApiTags('users')
 @Controller('users')
@@ -19,11 +19,12 @@ export class UserController {
     @ApiResponse({ status: 200, description: 'Find all users', type: ResponseUserListDto, isArray: true})
     @ApiForbiddenResponse({ description: 'FORBIDDEN'})
     async findAll(): Promise<ResponseUserListDto[]> {
-        return this.userService.findAll();
+        // TODO: https://github.com/typestack/class-transformer use groups
+        return (await this.userService.findAll())
+            .map(data => classToPlain(data, { groups: ["list"] }))
     }
 
     @Get(':id')
-    @UseInterceptors(TransformInterceptor)
     @ApiResponse({ status: 200, description: 'User details.', type: DetailUserDto})
     @ApiForbiddenResponse({ description: 'Forbidden.'})
     async findById(@Param('id') id: number): Promise<User> {
@@ -47,13 +48,13 @@ export class UserController {
     @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: DetailUserDto})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true, skipMissingProperties: true }))
-    async updateUser(@Param('id') id: number, @Body() user: DetailUserDto): Promise<User> {
+    async updateUser(@Param('id') id: number, @Body() user: DetailUserDto): Promise<Partial<User>> {
         console.log('update user with id', id, user);
         return {
             id,
             name: user.name,
             surname: user.surname,
-            email: user.email
+            email: user.email,
         };
     }
 
