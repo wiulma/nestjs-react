@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post, Put ,Delete, UsePipes, ValidationPipe, UseInterceptors, ClassSerializerInterceptor} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Patch ,Delete, UsePipes, ValidationPipe, HttpCode} from '@nestjs/common';
 import { ApiResponse, ApiForbiddenResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
-import { CreateUserDto, DetailUserDto, ResponseUserListDto } from './user.dto';
+import { RequestUserDto, DetailUserDto, ResponseUserListDto } from './user.dto';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import {classToPlain} from "class-transformer";
@@ -19,7 +19,6 @@ export class UserController {
     @ApiResponse({ status: 200, description: 'Find all users', type: ResponseUserListDto, isArray: true})
     @ApiForbiddenResponse({ description: 'FORBIDDEN'})
     async findAll(): Promise<ResponseUserListDto[]> {
-        // TODO: https://github.com/typestack/class-transformer use groups
         return (await this.userService.findAll())
             .map(data => classToPlain(data, { groups: ["list"] }))
     }
@@ -39,30 +38,31 @@ export class UserController {
     @ApiCreatedResponse({ description: 'The record has been successfully created.', type: DetailUserDto})
     @ApiForbiddenResponse({ description: 'Forbidden.'})
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true }))
-    async createUser(@Body() user: CreateUserDto): Promise<User | null> {
+    @HttpCode(201)
+    async createUser(@Body() user: RequestUserDto): Promise<null> {
         console.log('create user', user);
-        return this.userService.create(user);
+        await this.userService.create(user);
+        return;
     }
 
-    @Put(':id')
+    @Patch(':id')
     @ApiResponse({ status: 200, description: 'The record has been successfully updated.', type: DetailUserDto})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true, skipMissingProperties: true }))
-    async updateUser(@Param('id') id: number, @Body() user: DetailUserDto): Promise<Partial<User>> {
+    @HttpCode(204)
+    async updateUser(@Param('id') id: number, @Body() user: RequestUserDto): Promise<null> {
         console.log('update user with id', id, user);
-        return {
-            id,
-            name: user.name,
-            surname: user.surname,
-            email: user.email,
-        };
+        await this.userService.update(id, user);
+        return;
     }
 
     @Delete(':id')
     @ApiResponse({ status: 200, description: 'The record has been successfully deleted.'})
-    async deleteUser(@Param('id') id: number): Promise<any> {
+    @HttpCode(204)
+    async deleteUser(@Param('id') id: number): Promise<null> {
         console.log('delete user with id', id);
-        return null;
+        await this.userService.delete(id);
+        return;
     }
 
 }

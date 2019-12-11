@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import {Exclude, Expose} from "class-transformer";
+import { Expose} from "class-transformer";
 
 /**
  * Entity User
@@ -16,31 +16,31 @@ export class User {
   name: string;
 
   @Expose({ groups: ["list", "detail"] })
-  @Column({ length: 50 })
+  @Column({ length: 50})
   surname: string;
 
   @Expose({ groups: ["list", "detail"] })
-  @Column({ length: 50 })
+  @Column({ length: 50})
   email: string;
 
   @Expose({ groups: ["detail"] })
-  @Column({ length: 50 })
+  @Column({ length: 10, nullable: true })
   dateBorn: string;
 
   @Expose({ groups: ["detail"] })
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   address: string;
 
   @Expose({ groups: ["detail"] })
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   city: string;
 
   @Expose({ groups: ["detail"] })
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   country: string;  
 
   @Expose({ groups: ["detail"] })
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   imageUrl: string;
 
 }

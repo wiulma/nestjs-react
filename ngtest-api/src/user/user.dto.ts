@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsEmail } from 'class-validator';
+import { IsString, IsInt, IsEmail, IsOptional } from 'class-validator';
 
 /**
- * CreateUserDto
+ * RequestUserDto
  * @class
  */
-export class CreateUserDto {
+export class RequestUserDto {
     
     @ApiProperty()
     @IsString({message: 'INVALID.NAME'})
@@ -17,26 +17,32 @@ export class CreateUserDto {
 
     @ApiProperty()
     @IsEmail({}, { message: 'INVALID.EMAIL' })
+    @IsOptional()
     readonly email?: string;
 
     @ApiProperty()
-    @IsString()
+    @IsString({ message: 'INVALID.DATE_BORN' })
+    @IsOptional()
     readonly dateBorn?: string;
 
     @ApiProperty()
-    @IsString()
+    @IsString({ message: 'INVALID.ADDRESS' })
+    @IsOptional()
     readonly address?: string;
 
     @ApiProperty()
-    @IsString()
+    @IsString({ message: 'INVALID.CITY' })
+    @IsOptional()
     readonly city?: string;
 
     @ApiProperty()
-    @IsString()
+    @IsString({ message: 'INVALID.COUNTRY' })
+    @IsOptional()
     readonly country?: string;
 
     @ApiProperty()
-    @IsString()
+    @IsString({ message: 'INVALID.IMAGE_URL' })
+    @IsOptional()
     readonly imageUrl?: string
 }
 
