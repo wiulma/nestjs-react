@@ -44,6 +44,16 @@ export class RequestUserDto {
     @IsString({ message: 'INVALID.IMAGE_URL' })
     @IsOptional()
     readonly imageUrl?: string
+
+    @ApiProperty()
+    @IsString({ message: 'INVALID.USERNAME' })
+    @IsOptional()
+    readonly username?: string
+
+    @ApiProperty()
+    @IsString({ message: 'INVALID.PASSWORD' })
+    @IsOptional()
+    readonly password?: string    
 }
 
 /**

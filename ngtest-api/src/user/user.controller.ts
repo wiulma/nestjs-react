@@ -28,7 +28,7 @@ export class UserController {
     @ApiForbiddenResponse({ description: 'Forbidden.'})
     async findById(@Param('id') id: number): Promise<User> {
         console.log(`find user by id ${id}`);
-        return this.userService.findById(id);
+        return <User>classToPlain(await this.userService.findById(id), { groups: ["detail"] });
     }
 
     /**

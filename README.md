@@ -1,5 +1,5 @@
-# nest-react
-Boilerplate Nestjs + react
+# nest-svelte
+Boilerplate Nestjs + svelte
 
 
 ### Link

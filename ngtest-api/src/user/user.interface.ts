@@ -8,4 +8,6 @@ export interface IUser {
     city?: string;
     country?: string;
     imageUrl?: string;
+    username?: string;
+    password?: string;
 }
