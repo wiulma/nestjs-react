@@ -18,36 +18,7 @@ USE `test`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `credentials`
---
-
-DROP TABLE IF EXISTS `credentials`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `credentials` (
-  `id_user` int(11) NOT NULL,
-  `username` varchar(45) CHARACTER SET latin1 NOT NULL,
-  `password` varchar(500) CHARACTER SET latin1 NOT NULL,
-  `role` char(1) NOT NULL,
-  `api_token` varchar(60) DEFAULT NULL,
-  PRIMARY KEY (`id_utente`),
-  KEY `idx_tipo_abil` (`tipo_abilitazione`),
-  CONSTRAINT `FK_credentials` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `credentials`
---
-
-LOCK TABLES `credentials` WRITE;
-/*!40000 ALTER TABLE `credentials` DISABLE KEYS */;
-INSERT INTO `credentials` VALUES (1,'admin','','A','37f244864d15113ff3e150c0bf4d28a7bfeba416f89b4e84c3'),(2,'user1','','U',NULL);
-/*!40000 ALTER TABLE `credentials` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `utenti`
+-- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -67,7 +38,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-LOCK TABLES `utenti` WRITE;
+LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES (1,'admin','admin','giorgio.zett@gmail.com', null),
 (2,'user','user','user@sample.com',NULL);
@@ -82,5 +53,35 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+--
+-- Table structure for table `credentials`
+--
+
+DROP TABLE IF EXISTS `credentials`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `credentials` (
+  `id_user` int(11) NOT NULL,
+  `username` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `password` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `role` char(1) NOT NULL,
+  `api_token` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`id_user`),
+  KEY `idx_tipo_abil` (`tipo_abilitazione`),
+  CONSTRAINT `FK_credentials` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `credentials`
+--
+
+LOCK TABLES `credentials` WRITE;
+/*!40000 ALTER TABLE `credentials` DISABLE KEYS */;
+INSERT INTO `credentials` VALUES (1,'admin','','A','37f244864d15113ff3e150c0bf4d28a7bfeba416f89b4e84c3'),(2,'user1','','U',NULL);
+/*!40000 ALTER TABLE `credentials` ENABLE KEYS */;
+UNLOCK TABLES;
 
 -- Dump completed on 2016-04-08 17:59:29

@@ -13,7 +13,7 @@ services:
       - ./ngtest-api:/usr/local/ngtest-api
     entrypoint: ./docker/dev/entrypoint.sh
     env_file:
-      - ".env"    
+      - ".env"
     depends_on:
         - mysqldb
     ports:
@@ -43,7 +43,7 @@ services:
         - ".env"
     environment:
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_DATABASE=${MYSQL_APP_DATABASE}
         - MYSQL_USER=${MYSQL_APP_USER}
         - MYSQL_PASSWORD=${MYSQL_APP_PASSWORD}
     ports:
